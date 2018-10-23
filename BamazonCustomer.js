@@ -26,14 +26,14 @@ function start(){
         console.log('<<<<<<<<<<<-- Welcome to BAMazon -->>>>>>>>>>>');
         console.log('----------------------------------------------');
     
-        for (var i = 0; i<res.length; i++){
+        for (var i = 0; i < res.length; i++){
             console.log("ID: " + res[i].ItemID + " | " + "Product: " + res[i].ProductName + " | " + "Department: " + res[i].DepartmentName + " | " + "Price: $" +res[i].Price + " | " + "Stock Quantity: " + res[i].StockQuantity + " | ")
             console.log('--------------------------------------------------------------------------------------------------')
             
-            }
         }
+    }
 
-    )};
+)}
 
 
 console.log(' ');
@@ -62,24 +62,35 @@ inquirer.prompt([
             }
         }
     }
-]).then(function(input) {
-    var item = input.item_id;
-    var quantity = input.quantity;
-    // Query db to confirm that the given item ID exists in the specific numbers
-    var queryStr = 'SELECT * FROM products WHERE ?';
+]).then(function(ans) {
+    var whatToBuy = (ans,id)-1;
+    var howManyToBuy = parseInt(ans.qty);
+    var grandTotal = parseFloat(((res[whatToBuy].Price)*howManyToBuy).toFixed(2));
+// verify inventory is sufficient
+if(res[whatToBuy].StockQuantity >= howManyToBuy){
+    connection.query("UPDATE Products SET ? WHERE ?", [
+    {StockQuantity: (res[whatToBuy].StockQuantity - howManyToBuy)},
+{ItemID: ans.id}
+], function(err, result){
+    if(err) throw err;
+    console.log("Your order has been processed. Your total is $" + grandTotal.toFixed(2) + ". Your item(s) will be shipped to you in 2 days.");
 
-    connection.query(queryStr, (item_id: item), function(err, data) {
+});
+
+
+    // // Query db to confirm that the given item ID exists in the specific numbers
+    // var queryStr = 'SELECT * FROM products WHERE ?';
+
+    connection.query("SELECT * FROM Departments", function(err, deptRes) {
         if (err) throw err;
-
-        if (data.length === 0) {
-            console.log('ERROR: Invalid Item ID Please select a valid Item ID.');
-            displayInventory();
-
-        } else {    
-                var productData = data[0];
-
-                // If the quantity requested by the user is in stock 
-                if (quantity <= productData.stock_quantity)
+        var index;
+        for(var i = 0; i < deptRes.length; i++){
+            if(deptRes[i].DepartmentName === res[whatToBuy].DepartmentName){
+                index = i;
+            }
         }
-    })
-})}
+
+        
+    }
+    )
+})
