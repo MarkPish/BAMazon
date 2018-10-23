@@ -27,7 +27,8 @@ CREATE TABLE Departments(
     DepartmentName VARCHAR(50) NOT NULL,
     OverHeadCosts DECIMAL(10,2) NOT NULL,
     TotalSales DECIMAL(10,2) NOT NULL,
-    PRIMARY KEY(DepartmentID);
+    primary key(DepartmentID)
+);
 
 INSERT INTO Departments(DepartmentName, OverHeadCosts, TotalSales)
 VALUES ('ENTERTAINMENT', 100000.00, 27000.00),
@@ -38,4 +39,4 @@ VALUES ('ENTERTAINMENT', 100000.00, 27000.00),
     ('HEALTH & BODY', 7500.00, 3900.00),
     ('ELECTRONICS', 69000.00, 41000.00),
     ('CHILDREN', 50000.00, 37000.00);
-)
+

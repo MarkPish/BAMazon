@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/MarkPish/BAMazon/issues"
   },
-  "homepage": "https://github.com/MarkPish/BAMazon#readme"
+  "homepage": "https://github.com/MarkPish/BAMazon#readme",
+  "dependencies": {
+    "console.table": "^0.10.0"
+  }
 }

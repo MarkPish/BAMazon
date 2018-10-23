@@ -1,8 +1,7 @@
-// require mysql and inquirer
-var mysql = require('mysql');
-var inquirer = require('inquirer');
+const mySQL = require("mysql");
+const inquirer = require("inquirer");
+const table = require("console.table");
 
-// create connection to db
 var connection = mysql.createConnection({
     host: "localhost",
     port: "3306",
@@ -11,20 +10,31 @@ var connection = mysql.createConnection({
     database: "Bamazon"
 });
 
+connection.connect(function(err){
+    if (err){
+       // console.log(err);
+        //console.log("There is an error");
+    }
+});
+
+// display all of the items available for sale 
 function start(){
-// prints items for sale and their details
-connection.query('SELECT * FROM Products', function(err, res){
-    if(err) throw err; //do I need to include type of error thrown?
-
-console.log('<<<<<<<<<<<---Welcome to BAMazon--->>>>>>>>>>>')
-console.log('----------------------------------------------')
-}
-
-for(var i = 0; i<res.length; i++){
-    console.log("ID: " + res[i].ItemID + " | " + "Product: " + res[i].ProductName + " | " + "Department: " + res[i].DepartmentName + " | " + "Price: $" +res[i].Price + " | " + "Stock Quantity: " + res[i].StockQuantity + " | ")
-    console.log('--------------------------------------------------------------------------------------------------')
+    // prints items for sale and their details
+    connection.query('SELECT * FROM Products', function(err, res){
+        if(err) throw err; 
+        console.table(res);
+        console.log('<<<<<<<<<<<-- Welcome to BAMazon -->>>>>>>>>>>');
+        console.log('----------------------------------------------');
     
-}
+        for (var i = 0; i<res.length; i++){
+            console.log("ID: " + res[i].ItemID + " | " + "Product: " + res[i].ProductName + " | " + "Department: " + res[i].DepartmentName + " | " + "Price: $" +res[i].Price + " | " + "Stock Quantity: " + res[i].StockQuantity + " | ")
+            console.log('--------------------------------------------------------------------------------------------------')
+            
+            }
+        }
+
+    )};
+
 
 console.log(' ');
 inquirer.prompt([
@@ -33,7 +43,7 @@ inquirer.prompt([
         name: "id",
         message: "What is the ID of the product you would like to purchase?",
         validate: function(value){
-            if(isNaN(value) == false && parseInt(value) <= res.length && parseInt(value) > 0){
+            if(isNaN(value) == false && parseInt(value) <= response.length && parseInt(value) > 0){
                 return true;
             } else {
                 return false;
@@ -65,11 +75,11 @@ inquirer.prompt([
             console.log('ERROR: Invalid Item ID Please select a valid Item ID.');
             displayInventory();
 
-        } else {
+        } else {    
                 var productData = data[0];
 
                 // If the quantity requested by the user is in stock 
                 if (quantity <= productData.stock_quantity)
         }
     })
-})
+})}
