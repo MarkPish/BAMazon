@@ -9,7 +9,7 @@ var connection = mysql.createConnection({
     user: "root",
     password: "",
     database: "Bamazon"
-})
+});
 
 function start(){
 // prints items for sale and their details
@@ -52,4 +52,24 @@ inquirer.prompt([
             }
         }
     }
-]).then()
+]).then(function(input) {
+    var item = input.item_id;
+    var quantity = input.quantity;
+    // Query db to confirm that the given item ID exists in the specific numbers
+    var queryStr = 'SELECT * FROM products WHERE ?';
+
+    connection.query(queryStr, (item_id: item), function(err, data) {
+        if (err) throw err;
+
+        if (data.length === 0) {
+            console.log('ERROR: Invalid Item ID Please select a valid Item ID.');
+            displayInventory();
+
+        } else {
+                var productData = data[0];
+
+                // If the quantity requested by the user is in stock 
+                if (quantity <= productData.stock_quantity)
+        }
+    })
+})
