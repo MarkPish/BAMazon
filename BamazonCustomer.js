@@ -1,6 +1,6 @@
-const mySQL = require("mysql");
-const inquirer = require("inquirer");
-const table = require("console.table");
+let mySQL = require("mysql");
+let inquirer = require("inquirer");
+let table = require("console.table");
 
 var connection = mysql.createConnection({
     host: "localhost",
@@ -62,7 +62,7 @@ inquirer.prompt([
             }
         }
     }
-]).then(function(ans) {
+]).then(function(ans){
     var whatToBuy = (ans,id)-1;
     var howManyToBuy = parseInt(ans.qty);
     var grandTotal = parseFloat(((res[whatToBuy].Price)*howManyToBuy).toFixed(2));
@@ -89,8 +89,19 @@ if(res[whatToBuy].StockQuantity >= howManyToBuy){
                 index = i;
             }
         }
-
+        // will update totalSales in dept table
+        connection.query("UPDATE Departments SET ? WHERE ?", [
+        {TotalSales: deptRes[index].TotalSales + grandTotal},
+        {DepartmentName: res[whatToBuy].DepartmentName}
+        ], function(err, deptRes) {
+            if (err) throw err;
+        // console.log("Updated Department Sales");
+        });
+    });
         
+    } else{
+        console.log("Sorry, there is not enough in stock to fill your order!");
     }
-    )
+
+    reprompt();
 })
