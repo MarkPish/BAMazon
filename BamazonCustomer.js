@@ -1,8 +1,8 @@
-var mySQL = require("mysql");
+var mySQL = require("mySQL");
 var inquirer = require("inquirer");
 var table = require("console.table");
 
-var connection = mysql.createConnection({
+var connection = mySQL.createConnection({
     host: "localhost",
     port: "3306",
     user: "root",
@@ -45,6 +45,7 @@ inquirer.prompt([
         validate: function(value){
             if(isNaN(value) == false && parseInt(value) <= response.length && parseInt(value) > 0){
                 return true;
+                
             } else {
                 return false;
             }
@@ -105,4 +106,21 @@ if(res[whatToBuy].StockQuantity >= howManyToBuy){
     }
 
     reprompt();
-});
+    });
+
+    // Purchase another item prompt
+    function reprompt(){
+        inquirer.prompt([{
+            type: "confirm",
+            name: "reply",
+            message: "Would you like to purchase another item?"
+        }]).then(function(ans){
+            if(ans.reply){
+                start();
+            } else {
+                console.log("Thank you for shopping on BAMazon...like us on FaceBook!");
+            }
+        });
+    }
+
+    start();
