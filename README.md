@@ -44,6 +44,7 @@ I then populated the Bamazon database with 10 different products "for sale"
  
  ### Screenshots will go here
  
+ 
  ### Link to Video Walkthrough will go here...maybe
  
  ### Link to Deployed Bamazon Github Application
