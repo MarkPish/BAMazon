@@ -43,7 +43,8 @@ I then populated the Bamazon database with 10 different products "for sale"
  * Once the update goes through the total price will then be displayed to the customer.
  
  ### Screenshots will go here
- 
+ * Example for BAMazon table of products (Working)
+ ![Product Table image](/assets/images/BAMazonTable.png)
  
  ### Link to Video Walkthrough will go here...maybe
  
