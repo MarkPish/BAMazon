@@ -1,6 +1,6 @@
-let mySQL = require("mysql");
-let inquirer = require("inquirer");
-let table = require("console.table");
+var mySQL = require("mysql");
+var inquirer = require("inquirer");
+var table = require("console.table");
 
 var connection = mysql.createConnection({
     host: "localhost",
@@ -27,13 +27,13 @@ function start(){
         console.log('----------------------------------------------');
     
         for (var i = 0; i < res.length; i++){
-            console.log("ID: " + res[i].ItemID + " | " + "Product: " + res[i].ProductName + " | " + "Department: " + res[i].DepartmentName + " | " + "Price: $" +res[i].Price + " | " + "Stock Quantity: " + res[i].StockQuantity + " | ")
-            console.log('--------------------------------------------------------------------------------------------------')
+            console.log("ID: " + res[i].ItemID + " | " + "Product: " + res[i].ProductName + " | " + "Department: " + res[i].DepartmentName + " | " + "Price: $" +res[i].Price + " | " + "Stock Quantity: " + res[i].StockQuantity + " | ");
+            console.log('--------------------------------------------------------------------------------------------------');
             
         }
     }
 
-)}
+);}
 
 
 console.log(' ');
@@ -66,6 +66,7 @@ inquirer.prompt([
     var whatToBuy = (ans,id)-1;
     var howManyToBuy = parseInt(ans.qty);
     var grandTotal = parseFloat(((res[whatToBuy].Price)*howManyToBuy).toFixed(2));
+
 // verify inventory is sufficient
 if(res[whatToBuy].StockQuantity >= howManyToBuy){
     connection.query("UPDATE Products SET ? WHERE ?", [
@@ -104,4 +105,4 @@ if(res[whatToBuy].StockQuantity >= howManyToBuy){
     }
 
     reprompt();
-})
+});

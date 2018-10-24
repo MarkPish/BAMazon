@@ -20,7 +20,11 @@ VALUES ("Game of Thrones: Season 6", "ENTERTAINMENT",27.99,25),
     ("CheezIts", "GROCERY",3.29,24),
     ("Cetaphil Body Lotion", "HEALTH & BODY",4.99,20),
     ("The Blues Brothers", "ENTERTAINMENT",8.99,6),
-    ("Yeti 10qt Cooler", "SPORTING GOODS",69.99,10);
+    ("Yeti 10qt Cooler", "SPORTING GOODS",69.99,10),
+    ("bonfiretv stick", "ENTERTAINMENT",39.99,20),
+    ("Ugly Stick Rod and Reel 6 ft", "SPORTING GOODS",49.95,8),
+    ("Browns Super Bowl LX Champions sizeXL Hoodie", "CLOTHING",50.00,500);
+    
   
 CREATE TABLE Departments(
     DepartmentID MEDIUMINT AUTO_INCREMENT NOT NULL,
