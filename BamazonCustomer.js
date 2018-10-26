@@ -6,22 +6,26 @@ var connection = mySQL.createConnection({
     host: "localhost",
     port: "3306",
     user: "root",
-    password: "",
+    password: "root",
     database: "Bamazon"
 });
 
 connection.connect(function(err){
     if (err){
-       // console.log(err);
+       console.error(err);
         //console.log("There is an error");
+    }
+    else {
+        //console.log("Connected");
     }
 });
 
 // display all of the items available for sale 
-function start(){
+function showInventory(){
     // prints items for sale and their details
     connection.query('SELECT * FROM Products', function(err, res){
-        if(err) throw err; 
+        if(err) throw err;
+        console.log(res); 
         console.table(res);
         console.log('<<<<<<<<<<<-- Welcome to BAMazon -->>>>>>>>>>>');
         console.log('----------------------------------------------');
@@ -43,7 +47,7 @@ inquirer.prompt([
         name: "id",
         message: "What is the ID of the product you would like to purchase?",
         validate: function(value){
-            if(isNaN(value) == false && parseInt(value) <= response.length && parseInt(value) > 0){
+            if(isNaN(value) == false && parseInt(value) <= res.length && parseInt(value) > 0){
                 return true;
                 
             } else {
@@ -121,6 +125,6 @@ if(res[whatToBuy].StockQuantity >= howManyToBuy){
                 console.log("Thank you for shopping on BAMazon...like us on FaceBook!");
             }
         });
+        connection.end();
     }
 
-    start();
